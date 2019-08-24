@@ -19,3 +19,6 @@ db:
 
 sh:
 	docker-compose exec php bash
+
+dbg:
+	open http://localhost:8000/telescope
