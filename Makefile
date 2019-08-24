@@ -6,10 +6,16 @@ install:
 	docker-compose exec php php artisan key:generate
 	make db
 	open http://localhost:8000
-
-db:
-	docker-compose exec php php artisan migrate:fresh --seed
 	
 up:
 	docker-compose up -d
 	open http://localhost:8000
+
+down:
+	docker-compose down
+
+db:
+	docker-compose exec php php artisan migrate:fresh --seed
+
+sh:
+	docker-compose exec php bash
