@@ -27,16 +27,28 @@ $ make up
 $ make down
 ```
 
+- DBを作り直す場合
+
+```bash
+$ make db
+```
+
 - シェルの起動
 
 ```bash
 $ make sh
 ```
 
-- DBを作り直す場合
+- デバッガ(Telescope)の起動
 
 ```bash
-$ make db
+$ make dbg
+```
+
+- コード品質の評価(PHP Insightsの起動)
+
+```bash
+$ make qual
 ```
 
 ※ makeコマンドが使用できない環境の場合, `Makefile` を参照して該当のコマンドを実行して下さい.
