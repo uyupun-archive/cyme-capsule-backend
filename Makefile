@@ -22,3 +22,6 @@ sh:
 
 dbg:
 	open http://localhost:8000/telescope
+
+qual:
+	php artisan insights

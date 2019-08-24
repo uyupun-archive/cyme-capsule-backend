@@ -45,4 +45,10 @@ $ make sh
 $ make dbg
 ```
 
+- コード品質の評価(PHP Insightsの起動)
+
+```bash
+$ make qual
+```
+
 ※ makeコマンドが使用できない環境の場合, `Makefile` を参照して該当のコマンドを実行して下さい.
