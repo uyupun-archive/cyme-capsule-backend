@@ -4,7 +4,7 @@ Cyme Capsuleのバックエンド用リポジトリ.
 ### Gitの運用方法について
 
 issue毎に `feature-XXXX` ブランチを切って `develop` ブランチにPRを送る.  
-PRは確認後, `develop` にマージされ, 適切なタイミングで `master` にマージされる.
+PRはレビュー後 `develop` にマージされ, その後適切なタイミングで `master` にマージされる.
 
 ### セットアップ
 
