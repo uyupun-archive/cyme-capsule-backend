@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  # Webサーバ
+  nginx:
+    container_name: cyme-capsule-backend_nginx
+    image: nginx
+    ports:
+      - 8000:80
+    volumes:
+      - .:/var/www
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+
+  # アプリケーション
+  php:
+    container_name: cyme-capsule-backend_php
+    build: ./docker/php
+    volumes:
+      - .:/var/www
+    depends_on:
+      - mysql
+
+  # データベース
+  mysql:
+    container_name: cyme-capsule-backend_mysql
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: cyme_capsule
+      MYSQL_USER: uyupun
+      MYSQL_PASSWORD: uyupun
+      MYSQL_ROOT_PASSWORD: uyupun
+      TZ: 'Asia/Tokyo'
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+    ports:
+      - 3306:3306
