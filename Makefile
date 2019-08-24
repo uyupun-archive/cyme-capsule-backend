@@ -1,13 +1,14 @@
 install:
 	docker-compose build --no-cache
-	docker-compose exec php bash compser install
-	docker-compose exec php bash cp .env.example .env
-	docker-compose exec php bash php artisan key:generate
+	docker-compose up -d
+	docker-compose exec php composer install
+	docker-compose exec php cp .env.example .env
+	docker-compose exec php php artisan key:generate
 	make db
-	make up
+	open http://localhost:8000
 
 db:
-	docker-compose exec php bash php artisan migrate:fresh --seed
+	docker-compose exec php php artisan migrate:fresh --seed
 	
 up:
 	docker-compose up -d
