@@ -12,6 +12,8 @@ services:
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
+    networks:
+      - cyme-capsule
 
   # Web API
   php:
@@ -21,6 +23,8 @@ services:
       - .:/var/www
     depends_on:
       - mysql
+    networks:
+      - cyme-capsule
 
   # データベース
   mysql:
@@ -37,3 +41,9 @@ services:
       - ./docker/mysql/data:/var/lib/mysql
     ports:
       - 3306:3306
+    networks:
+      - cyme-capsule
+
+networks:
+  cyme-capsule:
+    external: true
