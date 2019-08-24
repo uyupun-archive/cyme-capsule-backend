@@ -13,7 +13,7 @@ services:
     depends_on:
       - php
 
-  # アプリケーション
+  # Web API
   php:
     container_name: cyme-capsule-backend_php
     build: ./docker/php
