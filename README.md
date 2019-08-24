@@ -11,6 +11,7 @@ PRはレビュー後 `develop` にマージされ, その後適切なタイミ�
 - 初回起動時
 
 ```bash
+$ docker network create cyme-capsule // フロントエンド側ですでに作成している場合は実行しなくて良い
 $ make install
 ```
 
