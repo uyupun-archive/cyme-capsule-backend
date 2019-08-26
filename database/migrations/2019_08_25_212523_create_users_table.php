@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->text('user_id');
             $table->text('password');
-            $table->text('access_token');
+            $table->text('access_token')->nullable();
             $table->timestamps();
         });
     }
