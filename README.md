@@ -45,7 +45,7 @@ $ make sh
 $ make dbg
 ```
 
-- コード品質の評価(PHP Insightsの起動)
+- コード品質の分析(PHP Insightsの起動)
 
 ```bash
 $ make qual
