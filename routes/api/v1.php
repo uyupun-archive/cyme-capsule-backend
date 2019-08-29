@@ -5,6 +5,8 @@ Route::get('/ping', function () {
     return response('pong', 200);
 });
 
+
+
 /**
  * 認証系API
  */

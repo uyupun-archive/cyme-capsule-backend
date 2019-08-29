@@ -20,6 +20,8 @@ class CapsuleController extends Controller
      */
     public function buriedList()
     {
+        $request = request();
+
         $data = [
             [
                 "id" => 1,
@@ -39,6 +41,8 @@ class CapsuleController extends Controller
      */
     public function dugList()
     {
+        $request = request();
+
         $data = [
             [
                 "id" => 1,
@@ -56,8 +60,10 @@ class CapsuleController extends Controller
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function open(Request $request)
+    public function open()
     {
+        $request = request();
+
         $data = [
             "id" => 1,
             "capsule_name" => "aaaaa",
@@ -67,7 +73,6 @@ class CapsuleController extends Controller
             "message" => "XXXXXXXXXX",
             "dug_at" => "XXXX"
         ];
-        // return response([], 200);
         return response(json_encode($data), 200);
     }
 
@@ -76,8 +81,10 @@ class CapsuleController extends Controller
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function bury(Request $request)
+    public function bury()
     {
+        $request = request();
+
         return response([], 200);
     }
 
@@ -86,8 +93,10 @@ class CapsuleController extends Controller
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function search(Request $request)
+    public function search()
     {
+        $request = request();
+
         $data = [
             [
                 "id" => 1,
@@ -105,8 +114,10 @@ class CapsuleController extends Controller
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function dig(Request $request)
+    public function dig()
     {
+        $request = request();
+
         $data = [
             "id"=> 1,
             "capsule_name"=> "XXXX",
