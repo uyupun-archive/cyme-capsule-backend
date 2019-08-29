@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
-use App\Providers\TelescopeServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,6 +14,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(UserService::class);
+
         if ($this->app->isLocal()) {
             $this->app->register(TelescopeServiceProvider::class);
         }

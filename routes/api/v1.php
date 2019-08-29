@@ -2,6 +2,8 @@
 
 Route::get('/hello', 'HelloController@hello');
 
+
+
 /**
  * 認証系API
  */
