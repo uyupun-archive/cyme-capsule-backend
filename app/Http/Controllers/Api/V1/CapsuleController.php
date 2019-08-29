@@ -20,7 +20,16 @@ class CapsuleController extends Controller
      */
     public function buriedList()
     {
-        return response([], 200);
+        $data = [
+            [
+                "id" => 1,
+                "capsule_name" => "あいう",
+            ],[
+                "id" => 2,
+                "capsule_name" => "えおかき"
+            ]
+        ];
+        return response(json_encode($data), 200);
     }
 
     /**
@@ -30,7 +39,16 @@ class CapsuleController extends Controller
      */
     public function dugList()
     {
-        return response([], 200);
+        $data = [
+            [
+                "id" => 1,
+                "capsule_name" => "umerareta",
+            ],[
+                "id" => 2,
+                "capsule_name" => "capsuletachi"
+            ]
+        ];
+        return response(json_encode($data), 200);
     }
 
     /**
@@ -38,9 +56,19 @@ class CapsuleController extends Controller
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function open()
+    public function open(Request $request)
     {
-        return response([], 200);
+        $data = [
+            "id" => 1,
+            "capsule_name" => "aaaaa",
+            "longitude" => 1.14514,
+            "latitude" => 1.919810,
+            "burier" => "XXXX",
+            "message" => "XXXXXXXXXX",
+            "dug_at" => "XXXX"
+        ];
+        // return response([], 200);
+        return response(json_encode($data), 200);
     }
 
     /**
@@ -48,7 +76,7 @@ class CapsuleController extends Controller
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function bury()
+    public function bury(Request $request)
     {
         return response([], 200);
     }
@@ -58,9 +86,18 @@ class CapsuleController extends Controller
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function search()
+    public function search(Request $request)
     {
-        return response([], 200);
+        $data = [
+            [
+                "id" => 1,
+                "capsule_name" => "aaaa",
+            ],[
+                "id" => 2,
+                "capsule_name" => "bbbb"
+            ]
+        ];
+        return response(json_encode($data), 200);
     }
 
     /**
@@ -68,8 +105,17 @@ class CapsuleController extends Controller
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function dig()
+    public function dig(Request $request)
     {
-        return response([], 200);
+        $data = [
+            "id"=> 1,
+            "capsule_name"=> "XXXX",
+            "longitude"=> 1.14514,
+            "latitude"=> 1.919810,
+            "burier"=> "XXXX",
+            "message"=> "XXXXXXXXXX",
+            "dug_at"=> "XXXX"
+        ];
+        return response(json_encode($data), 200);
     }
 }

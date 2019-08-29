@@ -1,6 +1,9 @@
 <?php
 
-Route::get('/hello', 'HelloController@hello');
+// テスト接続用
+Route::get('/ping', function () {
+    return response('pong', 200);
+});
 
 
 
