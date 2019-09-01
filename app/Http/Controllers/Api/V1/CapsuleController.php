@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\V1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Models\TimeCapsule;
+
 /**
  * カプセル操作系API
  *
@@ -97,16 +99,21 @@ class CapsuleController extends Controller
     {
         $request = request();
 
-        $data = [
-            [
-                "id" => 1,
-                "capsule_name" => "aaaa",
-            ],[
-                "id" => 2,
-                "capsule_name" => "bbbb"
-            ]
-        ];
-        return response(json_encode($data), 200);
+        $data = TimeCapsule::select(['id', 'capsule_name', 'longitude', 'latitude'])->get()->toArray();
+        foreach($data as $idx => $row){
+            $long_diff = $request->longitude - $row['longitude'];
+            $lati_diff = $request->latitude - $row['latitude'];
+            $data[$idx]['total_diff'] = sqrt($long_diff**2+$lati_diff**2);
+        }
+        usort($data , array($this, 'geoSort'));
+        $data = array_map(function($row){
+            unset($row['total_diff'],$row['longitude'], $row['latitude']);
+            //ここで消さなければ距離を返せる
+            // ただし緯度経度的な距離なのでメートルとかにするには再計算が必要
+            return $row;
+        }, $data);
+        // array_slice 第三引数で件数指定
+        return response(json_encode(array_slice($data, 0, 10)), 200);
     }
 
     /**
@@ -129,4 +136,17 @@ class CapsuleController extends Controller
         ];
         return response(json_encode($data), 200);
     }
+
+
+    private function geoSort($a, $b)
+    {
+        // $cmp = strcmp($a->name, $b->name);
+        if($a['total_diff'] == $b['total_diff']){
+            return 0;
+        }
+        // キャストされると精度的に辛いのでとりあえず100倍してみている
+        // リアルなカプセルの位置情報を入れてみておかしかったら直す
+        return ( $a['total_diff'] *100 < $b['total_diff'] * 100) ? -1 : 1;
+    }
 }
+
