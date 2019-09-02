@@ -27,7 +27,7 @@ class AuthController extends Controller
 
         // バリデーション
         $validator = Validator::make($request->all(), [
-            'user_id'   => ['bail', 'required', 'size:13', 'regex:/^[a-zA-Z0-9_]+$/', ],
+            'user_id'   => ['bail', 'required', 'max:13', 'regex:/^[a-zA-Z0-9_]+$/', ],
             'password'  => ['bail', 'required', 'string', ],
         ]);
         if ($validator->fails()) return response('{}', 400);
@@ -62,7 +62,7 @@ class AuthController extends Controller
 
         // バリデーション
         $validator = Validator::make($request->all(), [
-            'user_id'   => ['bail', 'required', 'size:13', 'regex:/^[a-zA-Z0-9_]+$/', ],
+            'user_id'   => ['bail', 'required', 'max:13', 'regex:/^[a-zA-Z0-9_]+$/', ],
             'password'  => ['bail', 'required', 'string', ],
         ]);
         if ($validator->fails()) return response('{}', 400);
