@@ -92,8 +92,12 @@ class AuthController extends Controller
     {
         $request = request();
 
+        // アクセストークンの取得
+        $accessToken = $request->header('Authorization');
+        $accessToken = explode(' ', $accessToken)[1];
+
         // アクセストークンの削除
-        User::where('access_token', $request->access_token)->update([
+        User::where('access_token', $accessToken)->update([
             'access_token' => null,
         ]);
 
