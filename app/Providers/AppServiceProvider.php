@@ -16,6 +16,8 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(UserService::class);
 
+        $this->app->register(\Barryvdh\Cors\ServiceProvider::class);
+
         if ($this->app->isLocal()) {
             $this->app->register(TelescopeServiceProvider::class);
         }
