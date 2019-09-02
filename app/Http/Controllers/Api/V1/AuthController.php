@@ -27,7 +27,7 @@ class AuthController extends Controller
 
         // バリデーション
         $validator = Validator::make($request->all(), [
-            'user_id'   => ['bail', 'required', 'regex:/^[a-zA-Z0-9_]+$/', ],
+            'user_id'   => ['bail', 'required', 'size:13', 'regex:/^[a-zA-Z0-9_]+$/', ],
             'password'  => ['bail', 'required', 'string', ],
         ]);
         if ($validator->fails()) return response('{}', 400);
@@ -40,7 +40,7 @@ class AuthController extends Controller
         $user->user_id = $request->user_id;
         $user->password = bcrypt($request->password);
 
-        // トークンの生成
+        // アクセストークンの生成
         $access_token = substr(bin2hex(random_bytes(32)), 0, 32);
 
         // トークンの格納
@@ -62,20 +62,20 @@ class AuthController extends Controller
 
         // バリデーション
         $validator = Validator::make($request->all(), [
-            'user_id'   => ['bail', 'required', 'regex:/^[a-zA-Z0-9_]+$/', ],
+            'user_id'   => ['bail', 'required', 'size:13', 'regex:/^[a-zA-Z0-9_]+$/', ],
             'password'  => ['bail', 'required', 'string', ],
         ]);
         if ($validator->fails()) return response('{}', 400);
 
         // 正当なユーザかどうかの判定
         $user = User::where('user_id', $request->user_id)->first();
-        if ($user == null) return response('{}', 409);
+        if ($user === null) return response('{}', 409);
         if (!Hash::check($request->password, $user->password)) return response('{}', 409);
 
-        // トークンの生成
+        // アクセストークンの生成
         $access_token = substr(bin2hex(random_bytes(32)), 0, 32);
 
-        // トークンの更新
+        // アクセストークンの更新
         User::where('user_id', $request->user_id)->update([
             'access_token' => $access_token,
         ]);
@@ -92,7 +92,7 @@ class AuthController extends Controller
     {
         $request = request();
 
-        // トークンをnullにする
+        // アクセストークンの削除
         User::where('access_token', $request->access_token)->update([
             'access_token' => null,
         ]);
