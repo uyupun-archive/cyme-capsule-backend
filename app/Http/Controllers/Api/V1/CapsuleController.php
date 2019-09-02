@@ -129,7 +129,9 @@ class CapsuleController extends Controller
             $data->dug_user_id = '1';
             $data->dug_at = Carbon::now();
             $data->save();
-            $data = $data->select('id','capsule_name','longitude','latitude','buried_user_id','message','dug_at')->first();
+            $data = TimeCapsule::select('id','capsule_name','longitude','latitude','user_name as burier','message','dug_at')
+                ->where('id', $request->id)
+                ->first();
             return response(json_encode($data, 200));
         }
     }
