@@ -97,6 +97,6 @@ class AuthController extends Controller
             'access_token' => null,
         ]);
 
-        return response([], 200);
+        return response('{}', 200);
     }
 }
