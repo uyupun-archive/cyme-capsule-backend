@@ -38,16 +38,8 @@ class CapsuleController extends Controller
     public function dugList()
     {
         $request = request();
-
-        $data = [
-            [
-                "id" => 1,
-                "capsule_name" => "umerareta",
-            ],[
-                "id" => 2,
-                "capsule_name" => "capsuletachi"
-            ]
-        ];
+        $user_id = 1;
+        $data = TimeCapsule::select('id', 'capsule_name')->where('dug_user_id', $user_id)->get();
         return response(json_encode($data), 200);
     }
 
