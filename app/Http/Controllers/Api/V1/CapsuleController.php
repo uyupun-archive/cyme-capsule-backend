@@ -60,15 +60,12 @@ class CapsuleController extends Controller
     {
         $request = request();
 
-        $data = [
-            "id" => 1,
-            "capsule_name" => "aaaaa",
-            "longitude" => 1.14514,
-            "latitude" => 1.919810,
-            "burier" => "XXXX",
-            "message" => "XXXXXXXXXX",
-            "dug_at" => "XXXX"
-        ];
+        if(!isset($request->id) || null == $request->id){
+            return response('Bad Request', 400);
+        }
+        $data = TimeCapsule::select('id', 'capsule_name', 'longitude', 'latitude', 'user_name as burier', 'message', 'dug_at')
+            ->find(intval($request->id));
+
         return response(json_encode($data), 200);
     }
 
