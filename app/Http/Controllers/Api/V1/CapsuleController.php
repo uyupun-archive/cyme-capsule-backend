@@ -24,16 +24,9 @@ class CapsuleController extends Controller
     public function buriedList()
     {
         $request = request();
+        $user_id = 1;
+        $data = TimeCapsule::select('id', 'capsule_name')->where('buried_user_id', '=', $user_id)->get();
 
-        $data = [
-            [
-                "id" => 1,
-                "capsule_name" => "あいう",
-            ],[
-                "id" => 2,
-                "capsule_name" => "えおかき"
-            ]
-        ];
         return response(json_encode($data), 200);
     }
 
