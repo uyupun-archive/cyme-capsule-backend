@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\TimeCapsule;
+use App\Models\User;
 use Carbon\Carbon;
 
 /**
@@ -79,8 +80,20 @@ class CapsuleController extends Controller
      */
     public function bury()
     {
+        $user_id = 1;
+        $user = User::find($user_id);
         $request = request();
+        $capsule = new TimeCapsule;
 
+        $capsule->capsule_name = $request->capsule_name;
+        $capsule->longitude = $request->longitude;
+        $capsule->latitude = $request->latitude;
+        $capsule->buried_user_id = $user->id;
+        $capsule->message = $request->message;
+        $capsule->user_name = $request->burier;
+
+        $capsule->save();
+        // 時間があったらsaveできなかったときの処理を入れたい
         return response([], 200);
     }
 
