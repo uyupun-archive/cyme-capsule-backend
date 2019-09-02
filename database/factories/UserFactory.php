@@ -3,7 +3,6 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use Faker\Generator as Faker;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * ユーザ情報のダミーデータ生成
