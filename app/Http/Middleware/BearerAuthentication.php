@@ -6,6 +6,8 @@ use App\Models\User;
 use Closure;
 
 /**
+ * Bearer認証周り
+ *
  * Class BearerAuthentication
  * @package App\Http\Middleware
  */
