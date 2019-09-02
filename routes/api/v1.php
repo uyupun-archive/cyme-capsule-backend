@@ -12,7 +12,7 @@ Route::get('/ping', function () {
  */
 
 // 登録
-Route::post('/user/register', 'AuthController@register');
+Route::post('/user/register', 'AuthController@register')->middleware('auth.bearer');
 // ログイン
 Route::post('/user/login', 'AuthController@login');
 // ログアウト
