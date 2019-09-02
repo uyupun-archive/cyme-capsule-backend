@@ -11,6 +11,6 @@ use Illuminate\Support\Facades\Hash;
 $factory->define(App\Models\User::class, function (Faker $faker) {
     return [
         'user_id'   => $faker->userName,
-        'password'  => Hash::make('password'),
+        'password'  => bcrypt('password'),
     ];
 });
