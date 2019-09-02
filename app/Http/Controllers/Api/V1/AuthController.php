@@ -41,13 +41,13 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password);
 
         // トークンの生成
-        $token = substr(bin2hex(random_bytes(32)), 0, 32);
+        $access_token = substr(bin2hex(random_bytes(32)), 0, 32);
 
         // トークンの格納
-        $user->token = $token;
+        $user->access_token = $access_token;
         $user->save();
 
-        return response(['token' => $token], 200);
+        return response(['access_token' => $access_token], 200);
     }
 
     /**
@@ -68,19 +68,19 @@ class AuthController extends Controller
         if ($validator->fails()) return response('{}', 400);
 
         // 正当なユーザかどうかの判定
-        $user = User::where($request->user_id)->first();
-        if (collect($user)->isEmpty()) return response('{}', 409);
-        if (Hash::check($request->password, $user->password)) return response('{}', 409);
+        $user = User::where('user_id', $request->user_id)->first();
+        if ($user == null) return response('{}', 409);
+        if (!Hash::check($request->password, $user->password)) return response('{}', 409);
 
         // トークンの生成
-        $token = substr(bin2hex(random_bytes(32)), 0, 32);
+        $access_token = substr(bin2hex(random_bytes(32)), 0, 32);
 
         // トークンの更新
         User::where('user_id', $request->user_id)->update([
-            'token' => $token,
+            'access_token' => $access_token,
         ]);
 
-        return response(['token' => $token], 200);
+        return response(['access_token' => $access_token], 200);
     }
 
     /**
@@ -93,8 +93,8 @@ class AuthController extends Controller
         $request = request();
 
         // トークンをnullにする
-        User::where('token', $request->token)->update([
-            'token' => null,
+        User::where('access_token', $request->access_token)->update([
+            'access_token' => null,
         ]);
 
         return response([], 200);
