@@ -27,7 +27,7 @@ Route::post('/user/logout', 'AuthController@logout')->middleware('auth.bearer');
 Route::group(['middleware' => 'auth.bearer', 'prefix' => 'capsule'], function () {
     // 埋めたカプセル一覧の取得
     Route::get('/list/buried', 'CapsuleController@buriedList');
-    // 掘り起こしたカプセル一覧の取得
+    // 掘り出したカプセル一覧の取得
     Route::get('/list/dug', 'CapsuleController@dugList');
     // カプセルを開く
     Route::get('/open', 'CapsuleController@open');
