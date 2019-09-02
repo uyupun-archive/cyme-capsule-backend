@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\TimeCapsule;
+use Carbon\Carbon;
 
 /**
  * カプセル操作系API
@@ -124,17 +125,18 @@ class CapsuleController extends Controller
     public function dig()
     {
         $request = request();
-
-        $data = [
-            "id"=> 1,
-            "capsule_name"=> "XXXX",
-            "longitude"=> 1.14514,
-            "latitude"=> 1.919810,
-            "burier"=> "XXXX",
-            "message"=> "XXXXXXXXXX",
-            "dug_at"=> "XXXX"
-        ];
-        return response(json_encode($data), 200);
+        $data = TimeCapsule::where('id',$request->id)->first();
+        //すでに掘り起こされているカプセルでないかの確認
+        if($data->dug_user_id == null){
+            return response('すでに誰かに掘り起こされています',200);
+        } else {
+            //!TODO 仮のUID固定値を仕様に即した取得方法で取得する'
+            $data->dug_user_id = '1';
+            $data->dug_at = Carbon::now();
+            $data->save();
+            $data = $data->select('id','capsule_name','longitude','latitude','buried_user_id','message','dug_at')->first();
+            return response(json_encode($data, 200));
+        }
     }
 
 
