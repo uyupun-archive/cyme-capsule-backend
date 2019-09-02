@@ -127,7 +127,7 @@ class CapsuleController extends Controller
         $request = request();
         $data = TimeCapsule::where('id',$request->id)->first();
         //すでに掘り起こされているカプセルでないかの確認
-        if($data->dug_user_id == null){
+        if($data->dug_user_id != null){
             return response('すでに誰かに掘り起こされています',200);
         } else {
             //!TODO 仮のUID固定値を仕様に即した取得方法で取得する'
