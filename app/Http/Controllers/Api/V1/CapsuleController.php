@@ -95,7 +95,10 @@ class CapsuleController extends Controller
     {
         $request = request();
 
-        $data = TimeCapsule::select(['id', 'capsule_name', 'longitude', 'latitude'])->get()->toArray();
+        $data = TimeCapsule::select(['id', 'capsule_name', 'longitude', 'latitude'])
+            ->whereNull('dug_user_id')
+            ->get()
+            ->toArray();
         foreach($data as $idx => $row){
             $long_diff = $request->longitude - $row['longitude'];
             $lati_diff = $request->latitude - $row['latitude'];
