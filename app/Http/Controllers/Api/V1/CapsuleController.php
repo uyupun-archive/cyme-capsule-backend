@@ -69,9 +69,8 @@ class CapsuleController extends Controller
      */
     public function bury()
     {
-        $user_id = 1;
-        $user = User::find($user_id);
         $request = request();
+        $user = $this->getUser($request);
         $capsule = new TimeCapsule;
 
         $capsule->capsule_name = $request->capsule_name;
@@ -149,6 +148,14 @@ class CapsuleController extends Controller
         // キャストされると精度的に辛いのでとりあえず100倍してみている
         // リアルなカプセルの位置情報を入れてみておかしかったら直す
         return ( $a['total_diff'] *100 < $b['total_diff'] * 100) ? -1 : 1;
+    }
+
+
+    private function getUser($request)
+    {
+        $authorization = $request->header('Authorization');
+        $authorization = explode(' ', $authorization);
+        return User::where('access_token', $authorization[1])->first();
     }
 }
 
