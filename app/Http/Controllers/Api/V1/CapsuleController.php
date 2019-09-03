@@ -99,8 +99,8 @@ class CapsuleController extends Controller
             ->get()
             ->toArray();
         foreach($data as $idx => $row){
-            $long_diff = $request->longitude - $row['longitude'];
-            $lati_diff = $request->latitude - $row['latitude'];
+            $long_diff = $request->input('longitude') - $row['longitude'];
+            $lati_diff = $request->input('latitude') - $row['latitude'];
             $data[$idx]['total_diff'] = sqrt($long_diff**2+$lati_diff**2);
         }
         usort($data , array($this, 'geoSort'));
