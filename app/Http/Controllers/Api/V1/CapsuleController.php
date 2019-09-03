@@ -127,8 +127,8 @@ class CapsuleController extends Controller
         if($data->dug_user_id != null){
             return response('すでに誰かに掘り起こされています',200);
         } else {
-            //!TODO 仮のUID固定値を仕様に即した取得方法で取得する'
-            $data->dug_user_id = '1';
+            $user = $this->getUser($request);
+            $data->dug_user_id = $user->id;
             $data->dug_at = Carbon::now();
             $data->save();
             $data = TimeCapsule::select('id','capsule_name','longitude','latitude','user_name as burier','message','dug_at')
