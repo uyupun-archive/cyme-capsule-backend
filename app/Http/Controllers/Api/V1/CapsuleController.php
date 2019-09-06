@@ -64,9 +64,8 @@ class CapsuleController extends Controller
      */
     public function bury()
     {
-        $user_id = 1;
-        $user = User::find($user_id);
         $request = request();
+        $user = $this->getUser($request);
         $capsule = new TimeCapsule;
 
         $capsule->capsule_name = $request->capsule_name;
@@ -95,8 +94,8 @@ class CapsuleController extends Controller
             ->get()
             ->toArray();
         foreach($data as $idx => $row){
-            $long_diff = $request->longitude - $row['longitude'];
-            $lati_diff = $request->latitude - $row['latitude'];
+            $long_diff = $request->input('longitude') - $row['longitude'];
+            $lati_diff = $request->input('latitude') - $row['latitude'];
             $data[$idx]['total_diff'] = sqrt($long_diff**2+$lati_diff**2);
         }
         usort($data , array($this, 'geoSort'));
@@ -123,8 +122,8 @@ class CapsuleController extends Controller
         if($data->dug_user_id != null){
             return response('すでに誰かに掘り起こされています',200);
         } else {
-            //!TODO 仮のUID固定値を仕様に即した取得方法で取得する'
-            $data->dug_user_id = '1';
+            $user = $this->getUser($request);
+            $data->dug_user_id = $user->id;
             $data->dug_at = Carbon::now();
             $data->save();
             $data = TimeCapsule::select('id','capsule_name','longitude','latitude','user_name as burier','message','dug_at')
@@ -155,11 +154,11 @@ class CapsuleController extends Controller
     /**
      * @return mixed
      */
-    private function getAccessToken()
+    private function getUser($request)
     {
-        $authorization = request()->header('Authorization');
-        $accessToken = explode(' ', $authorization)[1];
-        return $accessToken;
+        $authorization = $request->header('Authorization');
+        $authorization = explode(' ', $authorization);
+        return User::where('access_token', $authorization[1])->first();
     }
 }
 
