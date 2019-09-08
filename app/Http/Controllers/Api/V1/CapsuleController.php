@@ -161,4 +161,3 @@ class CapsuleController extends Controller
         return User::where('access_token', $authorization[1])->first();
     }
 }
-
