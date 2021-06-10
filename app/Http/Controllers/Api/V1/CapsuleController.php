@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 use App\Models\TimeCapsule;
 use App\Models\User;
 use Carbon\Carbon;
@@ -24,23 +22,20 @@ class CapsuleController extends Controller
      */
     public function buriedList()
     {
-        $request = request();
-        $user_id = 1;
-        $data = TimeCapsule::select('id', 'capsule_name')->where('buried_user_id', '=', $user_id)->get();
-
+        $userId = User::where('access_token', $this->getAccessToken())->first()->user_id;
+        $data = TimeCapsule::select('id', 'capsule_name')->where('buried_user_id', $userId)->get();
         return response(json_encode($data), 200);
     }
 
     /**
-     * 掘り起こしたカプセル一覧の取得
+     * 掘り出したカプセル一覧の取得
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function dugList()
     {
-        $request = request();
-        $user_id = 1;
-        $data = TimeCapsule::select('id', 'capsule_name')->where('dug_user_id', $user_id)->get();
+        $userId = User::where('access_token', $this->getAccessToken())->first()->user_id;
+        $data = TimeCapsule::select('id', 'capsule_name')->where('dug_user_id', $userId)->get();
         return response(json_encode($data), 200);
     }
 
@@ -138,7 +133,13 @@ class CapsuleController extends Controller
         }
     }
 
-
+    /**
+     * 緯度経度によるソート
+     *
+     * @param $a
+     * @param $b
+     * @return int
+     */
     private function geoSort($a, $b)
     {
         // $cmp = strcmp($a->name, $b->name);
@@ -150,7 +151,9 @@ class CapsuleController extends Controller
         return ( $a['total_diff'] *100 < $b['total_diff'] * 100) ? -1 : 1;
     }
 
-
+    /**
+     * @return mixed
+     */
     private function getUser($request)
     {
         $authorization = $request->header('Authorization');
@@ -158,4 +161,3 @@ class CapsuleController extends Controller
         return User::where('access_token', $authorization[1])->first();
     }
 }
-

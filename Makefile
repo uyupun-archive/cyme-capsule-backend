@@ -25,3 +25,6 @@ dbg:
 
 qual:
 	php artisan insights
+
+monitor:
+	docker stats cyme-capsule-frontend_nuxt cyme-capsule-backend_nginx cyme-capsule-backend_php cyme-capsule-backend_mysql
